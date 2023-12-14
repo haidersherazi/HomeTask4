@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class ChargingSimulator {
     private static final int numberOfChargingStations = 3; // Adjust as needed but currently there are 3 
     private static final int maxWaitingTime = 15 * 60 * 1000; // 15 minutes in milliseconds
-    private static final int maxSimulationUsers = 4; // Adjust as needed but currently there are 5 vehicles
+    private static final int maxSimulationUsers = 5; // Adjust as needed but currently there are 5 vehicles
     private static final int numberOfEnergySources = 2;
     
     private final EnergyManagementSystem energyManagementSystem;
@@ -76,7 +76,9 @@ public class ChargingSimulator {
             }
         }
 
+        
         // Executor service has Finished
+        SystemLogger.log("System simulation to charge the resserve batteries of vehicles has been finished successfully.");
         System.out.println("Simulation has been completed. \n\n");
         checkLogFiles();
         
@@ -117,7 +119,6 @@ public class ChargingSimulator {
     private void processCharging(int stationNumber) {
         
         while (!stopSimulation || !bookingQueue.isEmpty()) {
-            // Simulate continuous charging at the charging station
 
             // Get the current weather condition
             String currentWeather = WeatherSimulator.simulateWeather();
@@ -137,8 +138,8 @@ public class ChargingSimulator {
                         continue; // No vehicle in the queue
                     }
                 }
-                	
-                ChargingStationLogger.log(user.getUsername() + " has started charging at this station." , (stationNumber  + 1) );
+                
+                EnergySourceLogger.log("Station number " + (stationNumber  + 1) + " has been assigned to " + user.getUsername() + " to charge the reserve battery." );
                 
                 // waiting time calculation
                 long waitingTime = System.currentTimeMillis() - user.getVehicle().getArrivalTime(); 
@@ -147,7 +148,7 @@ public class ChargingSimulator {
                 	
                     System.out.println(user.getUsername() + " waited too long and left the queue.");
                     
-                    ChargingStationLogger.log(user.getUsername() + "has waited too long and left the queue.", (stationNumber  + 1) );
+                    SystemLogger.log(user.getUsername() + "has waited too long and left the queue." );
                     
                 } else {
                 	Random random = new Random();
@@ -158,7 +159,14 @@ public class ChargingSimulator {
                     boolean charged = chargingStation.chargeVehicle(chargingAmount);
 
                     if (charged) {
-                        System.out.println(user.getUsername() + " is charging at Station number " +
+                    	SystemLogger.log("Our System allocated station number " + (stationNumber + 1) + " to " + user.getUsername() + " to charge the reserve battery.");
+                    	
+                    	ChargingStationLogger.log("Reserve Battery of " + user.getUsername() + " vehicle has started charging at this station." , (stationNumber  + 1) );
+                    	
+                    	EnergyManagementLogger.log("Reserve battery of " + user.getUsername() +" vehicle is getting energy from " + chargingStation.getEnergySource().getSourceName()
+                    			+ " because the weather is " + currentWeather + ".");
+                    	
+                    	System.out.println(user.getUsername() + " is charging at Station number " +
                                 (stationNumber + 1) + " (Weather: " + currentWeather + " , Charging Source: " + chargingStation.getEnergySource().getSourceName() + ")");
                         
                         try {
@@ -169,15 +177,19 @@ public class ChargingSimulator {
 
                         // Release the station after charging
                         chargingStation.releaseStation();
-
-                        ChargingStationLogger.log(user.getUsername() + " has finished charging at this station." , (stationNumber  + 1));
+                        ChargingStationLogger.log("Reserve Battery of " + user.getUsername() + " vehicle has finished charging at this station." , (stationNumber  + 1));
+                        SystemLogger.log(user.getUsername() + " has finished charging successfully.");
+                        
                         System.out.println(user.getUsername()+ " finished charging at Station number " + (stationNumber + 1));
                     }
                 }
             } else {
+            	
                 // If the charging station cannot charge in the current weather, switch energy source
-                EnergySource newEnergySource = energyManagementSystem.getOptimalEnergySource("");
+            	currentWeather = WeatherSimulator.simulateWeather();
+                EnergySource newEnergySource = energyManagementSystem.getOptimalEnergySource(currentWeather);
                 chargingStation.switchEnergySource(newEnergySource);
+                SystemLogger.log("Weather condition does not allow charging at Charging station number" + (stationNumber + 1) + ". Switching to a new energy source.");
                 System.out.println("Weather condition does not allow charging. Switching to a new energy source.");
             }
         }
@@ -189,11 +201,11 @@ public class ChargingSimulator {
 
         while (userCount < maxSimulationUsers) {
             try {
-                Thread.sleep(random.nextInt(5000)); // Random arrival time from 0 to 3 seconds
+                Thread.sleep(random.nextInt(4000)); // Random arrival time from 0 to 4 seconds
                 
                 String role = "";
                 
-                if (userCount+1 == 3) {
+                if (userCount+1 == 9) {
                 	role = "ADMIN";
                 } else {
                 	role = "EXTERNAL";
@@ -206,7 +218,8 @@ public class ChargingSimulator {
                 	bookTimeSlot(user);
                 }
                 
-                System.out.println(user.getUsername() + " has arrived to charge reserve battery of his vehicle (Queue size: " + bookingQueue.size() + ")");
+                SystemLogger.log(user.getUsername() + " has booked the timeslot in our system successfully.");
+                System.out.println(user.getUsername() + " has arrived to charge reserve battery of the vehicle (Queue size: " + bookingQueue.size() + ")");
                 userCount++;
             } catch (InterruptedException e) {
                 e.printStackTrace();

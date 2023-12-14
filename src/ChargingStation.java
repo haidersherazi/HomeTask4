@@ -19,7 +19,8 @@ public class ChargingStation {
     public synchronized boolean chargeVehicle(int amount) {
         boolean charged = energySource.occupyStation(amount);
         if (charged) {
-            System.out.println("Charged vehicle with " + amount + " units of energy. Remaining Energy level will be: " + energySource.getEnergyLevel());
+        	EnergySourceLogger.log("Charge the vehicle with " + amount + " units of energy. Remaining Energy level will be: " + energySource.getEnergyLevel() );
+            System.out.println("Charge the vehicle with " + amount + " units of energy. Remaining Energy level will be: " + energySource.getEnergyLevel());
         } else {
             System.out.println("Insufficient energy to charge vehicle. Energy level: " + energySource.getEnergyLevel());
         }
