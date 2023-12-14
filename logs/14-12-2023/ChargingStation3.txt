@@ -1,0 +1,4 @@
+December 14, 2023 09:49:49     Reserve Battery of User-9 vehicle has started charging at this station.
+December 14, 2023 09:49:54     Reserve Battery of User-9 vehicle has finished charging at this station.
+December 14, 2023 09:49:54     Reserve Battery of User-8 vehicle has started charging at this station.
+December 14, 2023 09:49:59     Reserve Battery of User-8 vehicle has finished charging at this station.

@@ -1,0 +1,32 @@
+December 14, 2023 09:49:39     System simulation to charge the resserve batteries of vehicles has been started.
+December 14, 2023 09:49:41     User-1 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:41     Our System allocated station number 1 to User-1 to charge the reserve battery.
+December 14, 2023 09:49:41     User-2 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:41     Our System allocated station number 2 to User-2 to charge the reserve battery.
+December 14, 2023 09:49:42     User-3 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:43     User-4 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:45     User-5 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:45     User-6 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:46     User-1 has finished charging successfully.
+December 14, 2023 09:49:46     Our System allocated station number 1 to User-3 to charge the reserve battery.
+December 14, 2023 09:49:46     User-2 has finished charging successfully.
+December 14, 2023 09:49:46     Our System allocated station number 2 to User-6 to charge the reserve battery.
+December 14, 2023 09:49:47     User-7 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:47     User-8 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:48     User-9 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:49     User-10 has booked the timeslot in our system successfully.
+December 14, 2023 09:49:49     Our System allocated station number 3 to User-9 to charge the reserve battery.
+December 14, 2023 09:49:51     User-3 has finished charging successfully.
+December 14, 2023 09:49:51     Our System allocated station number 1 to User-10 to charge the reserve battery.
+December 14, 2023 09:49:51     User-6 has finished charging successfully.
+December 14, 2023 09:49:51     Our System allocated station number 2 to User-4 to charge the reserve battery.
+December 14, 2023 09:49:54     User-9 has finished charging successfully.
+December 14, 2023 09:49:54     Our System allocated station number 3 to User-8 to charge the reserve battery.
+December 14, 2023 09:49:56     User-10 has finished charging successfully.
+December 14, 2023 09:49:56     Our System allocated station number 1 to User-7 to charge the reserve battery.
+December 14, 2023 09:49:56     User-4 has finished charging successfully.
+December 14, 2023 09:49:56     Our System allocated station number 2 to User-5 to charge the reserve battery.
+December 14, 2023 09:49:59     User-8 has finished charging successfully.
+December 14, 2023 09:50:01     User-7 has finished charging successfully.
+December 14, 2023 09:50:01     User-5 has finished charging successfully.
+December 14, 2023 09:50:01     System simulation to charge the resserve batteries of vehicles has been finished successfully.
