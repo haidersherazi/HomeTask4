@@ -19,7 +19,7 @@ public class Metadata {
 
 	public void saveLogs() {
 		// Create log files
-        LogFileManager.createLogFile("ProjectMetaData.txt");
+        LogFileManager.createLogFile("ProjectMetaData.txt", true);
         
         try (FileWriter writer = new FileWriter(METADATA_LOG_FILE, false)) {
             

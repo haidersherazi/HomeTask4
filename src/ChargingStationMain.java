@@ -26,9 +26,9 @@ public class ChargingStationMain {
 
         
         // Create log files
-        LogFileManager.createLogFile("SystemLog.txt");
-        LogFileManager.createLogFile("ChargingStationLog.txt");
-        LogFileManager.createLogFile("EnergyManagementLog.txt");
+        LogFileManager.createLogFile("SystemLog.txt", false);
+        LogFileManager.createLogFile("ChargingStationLog.txt", false);
+        LogFileManager.createLogFile("EnergyManagementLog.txt", false);
         
         // Log some messages
         SystemLogger.log("Log Message of System functionality");

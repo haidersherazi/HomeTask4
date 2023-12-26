@@ -1,9 +1,11 @@
 
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 class LogFileManager {
-    private static final String logStr = "logs";
+    private static final String logStr = "logs/";
 
     // Create a directory for logs if it doesn't exist
     static {
@@ -14,9 +16,44 @@ class LogFileManager {
         }
     }
 
-    public static void createLogFile(String fileName) {
+    public static void createPerDayDirectory(String formattedDate) {
+    	
+		
+		// Check if the directory already exists
+        if (!Files.exists(Paths.get(logStr + formattedDate))) {
+            try {
+                // Create the directory if it doesn't exist
+                Files.createDirectories(Paths.get(logStr + formattedDate));
+//                System.out.println("Directory created successfully.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            System.out.println("Directory already exists.");
+        }
+    }
+    
+    public static void createLogFile(String fileName, Boolean createOnlyOnce) {
         try {
-        	Path logFilePath = Paths.get(logStr, fileName);
+        	
+        	String pathName = "";
+        	
+        	if (createOnlyOnce) {
+        		
+        		pathName = logStr;
+        		
+        	} else {
+        		LocalDateTime currentDateTime = LocalDateTime.now();
+        		DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        		String formattedDate = currentDateTime.format(dateformatter);
+                
+        		createPerDayDirectory(formattedDate);
+        		
+        		pathName = logStr + formattedDate;
+        	}
+        	
+    		
+        	Path logFilePath = Paths.get(pathName, fileName);
         	
         	if (!Files.exists(logFilePath)) {
                 Files.createFile(logFilePath);
