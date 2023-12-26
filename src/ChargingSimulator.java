@@ -23,6 +23,77 @@ public class ChargingSimulator {
     }
 
     public void simulateCharging() {
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfChargingStations);
+
+        executorService.submit(this::generateVehicles);
+
+        for (int i = 0; i < numberOfChargingStations; i++) {
+            final int stationNumber = i;
+            executorService.submit(() -> processVehicles(stationNumber));
+        }
+
+        // Shutdown the executor service after the simulation is done
+        executorService.shutdown();
+    }
+    
+    private void generateVehicles() {
+        Random random = new Random();
+        int vehicleCount = 0;
+
+        while (vehicleCount < maxSimulationVehicles) {
+            try {
+                Thread.sleep(random.nextInt(2000)); // Random arrival time from 0 to 5 seconds
+                Vehicle vehicle = new Vehicle(vehicleCount + 1);
+                synchronized (waitingQueue) {
+                    waitingQueue.add(vehicle);
+                }
+                System.out.println("Vehicle number " + vehicle.getId() + " arrived  (Queue size: " + waitingQueue.size() + ")");
+                vehicleCount++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        stopSimulation = true;
+    }
+    
+    private void processVehicles(int stationNumber) {
+        while (!stopSimulation) {
+            Vehicle vehicle;
+            synchronized (waitingQueue) {
+                if (!waitingQueue.isEmpty()) {
+                    vehicle = waitingQueue.poll();
+                } else {
+                    continue; // No vehicle in the queue
+                }
+            }
+
+            long waitingTime = System.currentTimeMillis() - vehicle.getArrivalTime();
+
+            if (waitingTime > maxWaitingTime) {
+                System.out.println("Vehicle number " + vehicle.getId() + " waited too long and left the queue.");
+            } else {
+                boolean charged = chargingStations[stationNumber].chargeVehicle();
+                if (charged) {
+                    System.out.println("Vehicle number " + vehicle.getId() + " is charging at Station number " + (stationNumber + 1) +
+                            "  (Waiting time: " + waitingTime / 1000 + " seconds)");
+                    try {
+                        Thread.sleep(5000); // Simulating charging time
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    chargingStations[stationNumber].releaseStation();
+
+                    System.out.println("Vehicle number " + vehicle.getId() + " finished charging at Station number " + (stationNumber + 1));
+                }
+            }
+        }
+    }
+    
+    
+    /*
+    public void simulateCharging1() {
     	
     	//using ExecutorService for parallel execution
     	
@@ -96,5 +167,5 @@ public class ChargingSimulator {
 
         // Shutdown the executor service after the simulation is done
         executorService.shutdown();
-    }
+    }*/
 }
