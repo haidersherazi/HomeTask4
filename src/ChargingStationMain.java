@@ -9,20 +9,29 @@ public class ChargingStationMain {
         metadata.saveLogs();
         
 		// Multi-user access  
-		User externalUser1 = new User("SyedHaiderAli", "EXTERNAL");
+//		User externalUser1 = new User("SyedHaiderAli", "EXTERNAL");
 //		User externalUser2 = new User("TazeenZahra", "EXTERNAL");
-		User adminUser = new User("AdminUser", "ADMIN");
+//		User adminUser = new User("AdminUser", "ADMIN");
 		
-        ChargingStation chargingStation = new ChargingStation(1);
-        chargingStation.addUser(externalUser1);
-//        chargingStation.addUser(externalUser2);
-        chargingStation.addUser(adminUser);
-
-        chargingStation.bookTimeSlot(externalUser1);
-//        chargingStation.bookTimeSlot(externalUser2);
-        chargingStation.bookTimeSlot(adminUser);
-
-        chargingStation.prioritizeQueue();
+		ChargingSimulator simulator = new ChargingSimulator();
+//		simulator.addUser(externalUser1);
+//		simulator.addUser(adminUser);
+//		simulator.bookTimeSlot(externalUser1);
+//		simulator.bookTimeSlot(adminUser);
+//		simulator.prioritizeQueue();
+		
+        simulator.simulateCharging();
+        
+//        ChargingStation chargingStation = new ChargingStation(1);
+//        chargingStation.addUser(externalUser1);
+////        chargingStation.addUser(externalUser2);
+//        chargingStation.addUser(adminUser);
+//
+//        chargingStation.bookTimeSlot(externalUser1);
+////        chargingStation.bookTimeSlot(externalUser2);
+//        chargingStation.bookTimeSlot(adminUser);
+//
+//        chargingStation.prioritizeQueue();
 
         
         // Create log files
@@ -47,7 +56,6 @@ public class ChargingStationMain {
 //        DataExchangeSimulator.simulateCharacterStream();
         
         
-        ChargingSimulator simulator = new ChargingSimulator();
-        simulator.simulateCharging();
+        
 	}
 }

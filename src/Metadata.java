@@ -30,6 +30,8 @@ public class Metadata {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        System.out.print("Project's metadata has been saved.\n");
 	}
 	
 	

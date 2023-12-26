@@ -2,11 +2,16 @@
 
 class User {
     private String username;
+    private int userId;
     private String role; // "EXTERNAL" or "ADMIN"
+    private Vehicle vehicle;
+    
 
-    public User(String username, String role) {
-        this.username = username;
+	public User(String role, int userId) {
+        this.username = "User-" + userId;
         this.role = role;
+        this.userId = userId;
+        this.vehicle = new Vehicle(userId);
     }
 
     // Getters and setters
@@ -25,5 +30,21 @@ class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 }
