@@ -3,7 +3,8 @@ import java.io.*;
 
 public class DataExchangeSimulator {
 
-	public static void simulateByteStream() {
+	public static void simulateByteStream(String sourceFile, String destinationFile) {
+		// both source and destination files should be in .dat format
         try (FileInputStream fis = new FileInputStream("input.dat");
              FileOutputStream fos = new FileOutputStream("output.dat")) {
             
@@ -20,9 +21,10 @@ public class DataExchangeSimulator {
         }
     }
 
-    public static void simulateCharacterStream() {
-        try (FileReader fr = new FileReader("input.txt");
-             FileWriter fw = new FileWriter("output.txt")) {
+    public static void simulateCharacterStream(String sourceFile, String destinationFile) {
+    	// both source and destination files should be in .txt format
+        try (FileReader fr = new FileReader(sourceFile);
+             FileWriter fw = new FileWriter(destinationFile)) {
             
         	// Read from fr
         	char[] buffer = new char[1024];

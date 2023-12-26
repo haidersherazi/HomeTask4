@@ -16,7 +16,12 @@ class LogFileManager {
 
     public static void createLogFile(String fileName) {
         try {
-            Files.createFile(Paths.get(logStr, fileName));
+        	Path logFilePath = Paths.get(logStr, fileName);
+        	
+        	if (!Files.exists(logFilePath)) {
+                Files.createFile(logFilePath);
+            }
+        
         } catch (IOException e) {
             e.printStackTrace();
         }

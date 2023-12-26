@@ -1,0 +1,3 @@
+Project Name        : ChargingStationSoftware
+Project Version     : 1.0
+Project Description : Charging stations management software to handle different stations.

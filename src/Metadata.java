@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Metadata {
 
@@ -5,6 +7,8 @@ public class Metadata {
 	private String projectName;
 	private String description;
 
+	private static final String METADATA_LOG_FILE = "logs/ProjectMetaData.txt";
+	
 	public Metadata (String pN, String v, String d) {
     
     	this.projectName = pN;
@@ -13,6 +17,22 @@ public class Metadata {
     
     }
 
+	public void saveLogs() {
+		// Create log files
+        LogFileManager.createLogFile("ProjectMetaData.txt");
+        
+        try (FileWriter writer = new FileWriter(METADATA_LOG_FILE, false)) {
+            
+        	writer.write("Project Name        : " + projectName + "\n");
+        	writer.write("Project Version     : " + version + "\n");
+        	writer.write("Project Description : " + description + "\n");
+        	
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	
     // Getters and setters
     
     public String getProjectName() {
