@@ -1,12 +1,10 @@
 
-
 class User {
     private String username;
     private int userId;
     private String role; // "EXTERNAL" or "ADMIN"
     private Vehicle vehicle;
     
-
 	public User(String role, int userId) {
         this.username = "User-" + userId;
         this.role = role;

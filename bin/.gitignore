@@ -9,3 +9,8 @@
 /User.class
 /Vehicle.class
 /ChargingSimulator.class
+/EnergySource.class
+/WeatherSimulator.class
+/EnergyManagementSystem.class
+/WeatherCondition.class
+/LogFileOpener.class

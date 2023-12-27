@@ -2,22 +2,52 @@
 
 public class ChargingStation {
 
-    private int availableChargingCapacity;
+    private EnergySource energySource;
 
-    public ChargingStation(int availableCapacity) {
-        this.availableChargingCapacity = availableCapacity;
+	public ChargingStation() {
+//        this.energySource = energySource;
     }
-    
-    
-    public synchronized boolean chargeVehicle() {
-        if (availableChargingCapacity > 0) {
-        	availableChargingCapacity-- ;
-            return true;
+	
+	public EnergySource getEnergySource() {
+		return energySource;
+	}
+
+	public void setEnergySource(EnergySource energySource) {
+		this.energySource = energySource;
+	}
+	
+    public synchronized boolean chargeVehicle(int amount) {
+        boolean charged = energySource.occupyStation(amount);
+        if (charged) {
+            System.out.println("Charged vehicle with " + amount + " units of energy. Remaining Energy level will be: " + energySource.getEnergyLevel());
+        } else {
+            System.out.println("Insufficient energy to charge vehicle. Energy level: " + energySource.getEnergyLevel());
         }
-        return false;
+        return charged;
+    }
+
+    public synchronized void switchEnergySource(EnergySource newEnergySource) {
+        System.out.println("Switching to a new energy source.");
+        this.energySource.release(30); // Replenish some energy before switching
+        this.energySource = newEnergySource;
+    }
+
+    public synchronized boolean canChargeInCurrentWeather(String currentWeather) {
+        
+        switch (currentWeather) {
+            case "Sunny":
+                return true;
+            case "Cloudy":
+                return energySource.getEnergyLevel() >= 50; // min energy value check if the weather is cloudy
+            case "Rainy":
+                return false; // Cannot charge during rainy weather
+            default:
+                return false;
+        }
     }
 
     public synchronized void releaseStation() {
-    	availableChargingCapacity++ ;
+        
+    	this.energySource.release(30); // Replenish some energy before switching
     }
 }
