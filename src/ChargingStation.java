@@ -5,7 +5,7 @@ public class ChargingStation {
     private EnergySource energySource;
 
 	public ChargingStation() {
-//        this.energySource = energySource;
+		
     }
 	
 	public EnergySource getEnergySource() {

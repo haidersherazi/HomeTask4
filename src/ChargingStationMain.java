@@ -12,12 +12,12 @@ public class ChargingStationMain {
        
         // Create log files
         LogFileManager.createLogFile("SystemLog.txt", false);
-        LogFileManager.createLogFile("ChargingStationLog.txt", false);
+//        LogFileManager.createLogFile("ChargingStationLog.txt", false);
         LogFileManager.createLogFile("EnergyManagementLog.txt", false);
         
         // Log some messages
         SystemLogger.log("Log Message of System functionality");
-        ChargingStationLogger.log("Log Message of Charging station functionality");
+//        ChargingStationLogger.log("Log Message of Charging station functionality");
         EnergyManagementLogger.log("Log Message of Energy management system functionality");
 
         

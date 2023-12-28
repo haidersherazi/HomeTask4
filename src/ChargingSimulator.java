@@ -29,7 +29,8 @@ public class ChargingSimulator {
         energyManagementSystem = new EnergyManagementSystem(numberOfEnergySources);
         
         for (int i = 0; i < numberOfChargingStations; i++) {
-            chargingStations[i] = new ChargingStation(); 
+            chargingStations[i] = new ChargingStation();
+            LogFileManager.createLogFile("ChargingStation" + (i+1) + ".txt", false);
         }
     }
 
@@ -59,7 +60,6 @@ public class ChargingSimulator {
             executorService.submit(() -> processCharging(stationNumber));
         }
 
-        
         
         // Shutdown the executor service after the simulation is done
         executorService.shutdown();
@@ -121,8 +121,6 @@ public class ChargingSimulator {
 
             // Get the current weather condition
             String currentWeather = WeatherSimulator.simulateWeather();
-
-            
             
             ChargingStation chargingStation = chargingStations[stationNumber];
             chargingStation.setEnergySource(energyManagementSystem.getOptimalEnergySource(currentWeather));
@@ -140,12 +138,16 @@ public class ChargingSimulator {
                     }
                 }
                 	
+                ChargingStationLogger.log(user.getUsername() + " has started charging at this station." , (stationNumber  + 1) );
+                
                 // waiting time calculation
                 long waitingTime = System.currentTimeMillis() - user.getVehicle().getArrivalTime(); 
                 
                 if (waitingTime > maxWaitingTime) {
                 	
                     System.out.println(user.getUsername() + " waited too long and left the queue.");
+                    
+                    ChargingStationLogger.log(user.getUsername() + "has waited too long and left the queue.", (stationNumber  + 1) );
                     
                 } else {
                 	Random random = new Random();
@@ -168,8 +170,8 @@ public class ChargingSimulator {
                         // Release the station after charging
                         chargingStation.releaseStation();
 
-                        System.out.println(user.getUsername()+ " finished charging at Station number " +
-                                (stationNumber + 1));
+                        ChargingStationLogger.log(user.getUsername() + " has finished charging at this station." , (stationNumber  + 1));
+                        System.out.println(user.getUsername()+ " finished charging at Station number " + (stationNumber + 1));
                     }
                 }
             } else {
@@ -203,7 +205,8 @@ public class ChargingSimulator {
                 synchronized (bookingQueue) {
                 	bookTimeSlot(user);
                 }
-                System.out.println(user.getUsername() + " has arrived to charge his vehicle battery (Queue size: " + bookingQueue.size() + ")");
+                
+                System.out.println(user.getUsername() + " has arrived to charge reserve battery of his vehicle (Queue size: " + bookingQueue.size() + ")");
                 userCount++;
             } catch (InterruptedException e) {
                 e.printStackTrace();

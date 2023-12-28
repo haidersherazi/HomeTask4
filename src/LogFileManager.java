@@ -88,4 +88,5 @@ class LogFileManager {
         String archivedFileName = "archive_" + fileName;
         moveLogFile(fileName, archivedFileName);
     }
+    
 }
